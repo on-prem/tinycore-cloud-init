@@ -1,0 +1,107 @@
+diff --git a/execute.c b/execute.c
+index 05fdfd1..4686d77 100644
+--- a/execute.c
++++ b/execute.c
+@@ -156,50 +156,12 @@ int doit(const char *str) {
+ 	return 1;
+ }
+ 
+-static int execute_options(interface_defn *ifd, execfn *exec, char *opt) {
+-	for (int i = 0; i < ifd->n_options; i++)
+-		if (strcmp(ifd->option[i].name, opt) == 0)
+-			if (interrupted || !(*exec) (ifd->option[i].value))
+-				if (!ignore_failures)
+-					return 0;
+-
+-	return 1;
+-}
+-
+-static int execute_scripts(interface_defn *ifd, execfn *exec, char *opt) {
+-	if (interrupted)
+-		return 1;
+-
+-	if (!run_scripts)
+-		return 1;
+-
+-	if (no_scripts_ints && match_patterns(ifd->logical_iface, no_scripts_ints, no_scripts_int))
+-		return 1;
+-
+-
+-	char *command;
+-	if(asprintf(&command, "/bin/run-parts %s%s/etc/network/if-%s.d", ignore_failures ? "" : "--exit-on-error ", verbose ? "--verbose " : "", opt) == -1)
+-		err(1, "asprintf");
+-
+-	int result = (*exec) (command);
+-
+-	free(command);
+-
+-	return ignore_failures ? 1 : result;
+-}
+-
+ int iface_preup(interface_defn *iface) {
+ 	set_environ(iface, "start", "pre-up");
+ 
+ 	if (!iface->method->up(iface, check))
+ 		return -1;
+ 
+-	if (!execute_options(iface, doit, "pre-up"))
+-		return 0;
+-
+-	if (!execute_scripts(iface, doit, "pre-up"))
+-		return 0;
+-
+ 	return 1;
+ }
+ 
+@@ -209,12 +171,6 @@ int iface_postup(interface_defn *iface) {
+ 	if (!iface->method->up(iface, doit))
+ 		return 0;
+ 
+-	if (!execute_options(iface, doit, "up"))
+-		return 0;
+-
+-	if (!execute_scripts(iface, doit, "up"))
+-		return 0;
+-
+ 	return 1;
+ }
+ 
+@@ -255,12 +211,6 @@ int iface_predown(interface_defn *iface) {
+ 	if (!iface->method->down(iface, check))
+ 		return -1;
+ 
+-	if (!execute_scripts(iface, doit, "down"))
+-		return 0;
+-
+-	if (!execute_options(iface, doit, "down"))
+-		return 0;
+-
+ 	return 1;
+ }
+ 
+@@ -270,12 +220,6 @@ int iface_postdown(interface_defn *iface) {
+ 
+ 	set_environ(iface, "stop", "post-down");
+ 
+-	if (!execute_scripts(iface, doit, "post-down"))
+-		return 0;
+-
+-	if (!execute_options(iface, doit, "post-down"))
+-		return 0;
+-
+ 	return 1;
+ }
+ 
+diff --git a/tags b/tags
+index c56847f..b2dc106 100644
+--- a/tags
++++ b/tags
+@@ -179,8 +179,6 @@ excludeints	main.c	/^static int excludeints = 0;$/;"	v	file:
+ execable	archcommon.c	/^bool execable(const char *program) {$/;"	f
+ execfn	header.h	/^typedef int (execfn) (const char *command);$/;"	t
+ execute	execute.c	/^int execute(const char *command, interface_defn *ifd, execfn *exec) {$/;"	f
+-execute_options	execute.c	/^static int execute_options(interface_defn *ifd, execfn *exec, char *opt) {$/;"	f	file:
+-execute_scripts	execute.c	/^static int execute_scripts(interface_defn *ifd, execfn *exec, char *opt) {$/;"	f	file:
+ expand_matches	main.c	/^static void expand_matches(int *argc, char ***argv) {$/;"	f	file:
+ filename	config.c	/^	char *filename;$/;"	m	struct:seen_file	file:
+ find_allowup	config.c	/^allowup_defn *find_allowup(interfaces_file *defn, const char *name) {$/;"	f

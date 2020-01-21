@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DEB_HOST_ARCH_OS=linux
+
+echo $DEB_HOST_ARCH_OS

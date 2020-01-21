@@ -1,0 +1,3 @@
+ntpserver: pool.ntp.org
+hostname: on-prem-appliance
+storagetype: local

@@ -10,7 +10,6 @@ compile_deps := perl5 squashfs-tools curl
 all: deps setup build tcz
 
 setup:
-		sudo rm -rf $(artifact)
 		sudo ln -sf /usr/local/bin/perl /usr/bin/perl
 		sudo cp -a dpkg-architecture /usr/local/bin
 		curl -L -o $(package_name) https://deb.debian.org/debian/pool/main/i/ifupdown/$(package_name)

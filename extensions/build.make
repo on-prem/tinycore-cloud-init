@@ -10,6 +10,7 @@ artifact := $(HOME)/artifacts/$(package)-tc$(TC_VERSION)
 .PHONY: deps tcz perms clean
 
 deps:
+		sudo rm -rf $(artifact)
 		tce-load -wicl $(compile_deps)
 
 perms:

@@ -1,0 +1,31 @@
+name: Extensions
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        extension: [ 'ifupdown', 'cloud-init-deps', 'cloud-init' ]
+        tc_version: [ '10.0-x86_64' ]
+
+    container: tatsushid/tinycore:${{ matrix.tc_version }}
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v1
+
+      - name: Build the extension (${{ matrix.extension }})
+        id: tcz
+        run: |
+          tce-load -wicl git compiletc coreutils
+          cd ${GITHUB_WORKSPACE}/extensions/${{ matrix.extension }}
+          make TC_VERSION=${{ matrix.tc_version }}
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: ${{ matrix.extension }}-tc${{ matrix.tc_version }}
+          path: ${{ runner.temp }}/_github_home/artifacts/${{ matrix.extension }}-tc${{ matrix.tc_version }}

@@ -1,9 +1,6 @@
 # Makefile
 
-VERSION ?= 0.8.35
-package := ifupdown
-package_name := $(package)_$(VERSION).tar.xz
-compile_deps := perl5 squashfs-tools curl
+include config.make
 
 .PHONY: all deps setup build tcz
 
@@ -12,7 +9,7 @@ all: deps setup build tcz
 setup:
 		sudo ln -sf /usr/local/bin/perl /usr/bin/perl
 		sudo cp -a dpkg-architecture /usr/local/bin
-		curl -L -o $(package_name) https://deb.debian.org/debian/pool/main/i/ifupdown/$(package_name)
+		curl -L -o $(package_name) $(package_source)
 		tar -xJf $(package_name)
 
 build:

@@ -25,7 +25,31 @@ jobs:
           cd ${GITHUB_WORKSPACE}/extensions/${{ matrix.extension }}
           make TC_VERSION=${{ matrix.tc_version }}
 
-      - uses: actions/upload-artifact@v1
-        with:
-          name: ${{ matrix.extension }}-tc${{ matrix.tc_version }}
-          path: ${{ runner.temp }}/_github_home/artifacts/${{ matrix.extension }}-tc${{ matrix.tc_version }}
+      - name: Download and setup JFrog CLI
+        run: |
+          curl -L -o jfrog 'https://api.bintray.com/content/jfrog/jfrog-cli-go/$latest/jfrog-cli-linux-amd64/jfrog?bt_package=jfrog-cli-linux-amd64'
+          chmod +x jfrog
+          sudo mv jfrog /usr/bin/jfrog
+          sudo mkdir -p /etc/ssl/certs
+          sudo ln -s /usr/local/etc/ssl/cacert.pem /etc/ssl/certs/ca-certificates.crt
+
+      - name: Upload the artifact to Bintray
+        env:
+          JFROG_CLI_LOG_LEVEL: DEBUG
+          JFROG_CLI_OFFER_CONFIG: false
+        run: |
+          package=${{ matrix.extension }}-tc${{ matrix.tc_version }}
+          version=$(cat ${HOME}/artifacts/config.version)
+          source=$(cat ${HOME}/artifacts/config.source)
+          license=$(cat ${HOME}/artifacts/config.license)
+          jfrog bt config \
+            --user ${{ secrets.BINTRAY_API_USER }} --key ${{ secrets.BINTRAY_API_KEY }}
+          jfrog bt package-show on-prem/tinycore-extensions/${{ matrix.extension }} || \
+          jfrog bt package-create \
+            --vcs-url "https://github.com/${{ github.repository }}" \
+            --licenses "${license}" \
+            on-prem/tinycore-extensions/${{ matrix.extension }}
+          jfrog bt upload \
+            "${HOME}/artifacts/${package}/" \
+            on-prem/tinycore-extensions/${{ matrix.extension }}/${version} \
+            ${{ matrix.tc_version }}/ || true

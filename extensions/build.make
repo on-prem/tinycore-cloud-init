@@ -7,7 +7,7 @@ PKG_CONFIG_PATH = /usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 TC_VERSION ?= 9.0-x86_64
 artifact := $(HOME)/artifacts/$(package)-tc$(TC_VERSION)
 
-.PHONY: deps tcz perms clean
+.PHONY: deps tcz perms config clean
 
 deps:
 		sudo rm -rf $(artifact)
@@ -28,7 +28,14 @@ tcz:
 		sha256sum $(package).tcz > $(package).tcz.sha256.txt && \
 		find $(package) -not -type d -printf '%P\n' | sort > $(package).tcz.list && \
 		echo "Version: $(VERSION)" > $(package).tcz.info
+		$(MAKE) config
 		$(MAKE) clean
+
+config:
+		cd $(HOME)/artifacts && \
+		echo $(VERSION) > config.version && \
+		echo $(package_source) > config.source && \
+		echo $(package_license) > config.license
 
 clean:
 		sudo rm -rf $(package) $(package_name) $(artifact)/$(package)

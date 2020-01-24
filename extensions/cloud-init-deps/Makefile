@@ -1,16 +1,13 @@
 # Makefile
 
-VERSION ?= 19.3
-package := cloud-init-deps
-package_name := $(package)-$(VERSION).tar.gz
-compile_deps := python3.6 squashfs-tools curl libffi
+include config.make
 
 .PHONY: all deps setup build tcz
 
 all: deps setup build tcz
 
 setup:
-		curl -L -o $(package_name) https://github.com/canonical/cloud-init/archive/$(VERSION).tar.gz
+		curl -L -o $(package_name) $(package_source)
 		tar -xzf $(package_name)
 
 build:

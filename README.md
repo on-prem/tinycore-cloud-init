@@ -4,6 +4,8 @@
 
 This repo contains custom scripts to prepare [cloud-init](https://cloud-init.io/) for standard [TinyCore Linux](http://tinycorelinux.net) virtual appliances and cloud servers.
 
+![tinycore-cloud-init](https://user-images.githubusercontent.com/153401/73237408-66da5400-418d-11ea-8498-691371e10d87.png)
+
 It is split into 3 sub-directories:
 
   1. **extensions**: Build scripts for creating the required TinyCore `.tcz` extensions

@@ -32,11 +32,15 @@ For this reason, we've created a set of simple custom _Shell_ scripts to handle 
 
 ## How it works
 
+![rootfs](https://user-images.githubusercontent.com/153401/73244995-1bcb3b80-41a3-11ea-9d27-151d58bb1cdf.png)
+
 Once the overlay is added into the rootfs, only 3 extensions (and their dependencies) need to be loaded on boot:
 
   * [ifupdown.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:ifupdown.tcz)
   * [cloud-init.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init.tcz)
   * [cloud-init-deps.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init-deps.tcz)
+
+![boot](https://user-images.githubusercontent.com/153401/73244997-1bcb3b80-41a3-11ea-9841-b73644287c4f.png)
 
 The `/opt/bootsync.sh` will run `cloud-init` and then try to setup networking through `/opt/network.sh`, which is simply calling `cloud-init` once more with different arguments. The reason for this is to provide backward compatibility for existing On-Prem TinyCore deployments.
 
@@ -78,6 +82,8 @@ If they are not backed up, the initial config will take a bit more time.
 ## Userdata, Metadata, Vendordata
 
 The _Shell_ scripts provided for this _cloud-init_ deployment will read settings from various files on the system, including any userdata or vendordata provided to the system.
+
+![precedence](https://user-images.githubusercontent.com/153401/73244998-1bcb3b80-41a3-11ea-8dce-1fbf0b57dd88.png)
 
 The order of precendence for reading configuration values are:
 

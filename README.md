@@ -38,7 +38,7 @@ Once the overlay is added into the rootfs, only 3 extensions (and their dependen
   * [cloud-init.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init.tcz)
   * [cloud-init-deps.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init-deps.tcz)
 
-The `/opt/booysync.sh` will run `cloud-init` and then try to setup networking through `/opt/network.sh`, which is simply calling `cloud-init` once more with different arguments. The reason for this is to provide backward compatibility for existing On-Prem TinyCore deployments.
+The `/opt/bootsync.sh` will run `cloud-init` and then try to setup networking through `/opt/network.sh`, which is simply calling `cloud-init` once more with different arguments. The reason for this is to provide backward compatibility for existing On-Prem TinyCore deployments.
 
 **Note:** If there is no usage of the [network.tcz](https://github.com/on-prem/tinycore-network), [jidoteki-admin.tcz](https://github.com/on-prem/jidoteki-admin), or [jidoteki-admin-api.tcz](https://github.com/on-prem/jidoteki-admin-api) extensions, `/opt/network.sh` can be removed from `/opt/bootsync.sh` and replaced with:
 

@@ -52,4 +52,4 @@ jobs:
           jfrog bt upload \
             "${HOME}/artifacts/${package}/" \
             on-prem/tinycore-extensions/${{ matrix.extension }}/${version} \
-            ${{ matrix.tc_version }}/ || true
+            ${{ matrix.tc_version }}/${{ matrix.extension }}/${version}/ || true

@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         extension: [ 'ifupdown', 'cloud-init-deps', 'cloud-init' ]
-        tc_version: [ '10.0-x86_64' ]
+        tc_version: [ '11.0-x86_64' ]
 
     container: tatsushid/tinycore:${{ matrix.tc_version }}
 

@@ -14,7 +14,7 @@ It is split into 3 sub-directories:
 
 ## Cloud-init on TinyCore Linux
 
-The current version of _cloud-init_ (`v19.x`) does not support TinyCore Linux. It is designed for systems such as Debian, CentOS, FreeBSD, etc. Lack of support for TinyCore leads us to two options:
+The current version of _cloud-init_ (`v20.1`) does not support TinyCore Linux. It is designed for systems such as Debian, CentOS, FreeBSD, etc. Lack of support for TinyCore leads us to two options:
 
   * Modify _cloud-init_ and its _Python_ code to work with TinyCore Linux
   * Create custom scripts for operations specific to TinyCore Linux

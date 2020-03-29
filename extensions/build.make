@@ -4,7 +4,7 @@ CFLAGS = -mtune=generic -Os -pipe
 CXXFLAGS = -mtune=generic -Os -pipe -fno-exceptions -fno-rtti
 PKG_CONFIG_PATH = /usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
-TC_VERSION ?= 9.0-x86_64
+TC_VERSION ?= 11.0-x86_64
 artifact := $(HOME)/artifacts/$(package)-tc$(TC_VERSION)
 
 .PHONY: deps tcz perms config clean

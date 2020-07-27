@@ -34,11 +34,11 @@ For this reason, we've created a set of simple custom _Shell_ scripts to handle 
 
 ![rootfs](https://user-images.githubusercontent.com/153401/73244995-1bcb3b80-41a3-11ea-9d27-151d58bb1cdf.png)
 
-Once the overlay is added into the rootfs, only 3 extensions (and their dependencies) need to be loaded on boot:
+Once the overlay is added into the rootfs, only 3 extensions (and their dependencies) need to be loaded on boot. They are automatically built by [GitHub Actions](.github/workflows/main.yml), and can be downloaded [from Bintray](https://bintray.com/on-prem/tinycore-extensions):
 
-  * [ifupdown.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:ifupdown.tcz)
-  * [cloud-init.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init.tcz)
-  * [cloud-init-deps.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/10.0-x86_64/:cloud-init-deps.tcz)
+  * [ifupdown.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/11.0-x86_64/ifupdown/)
+  * [cloud-init.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/11.0-x86_64/cloud-init/20.2/)
+  * [cloud-init-deps.tcz](https://dl.bintray.com/on-prem/tinycore-extensions/11.0-x86_64/cloud-init-deps/20.2/)
 
 ![boot](https://user-images.githubusercontent.com/153401/73244997-1bcb3b80-41a3-11ea-9841-b73644287c4f.png)
 
@@ -128,10 +128,10 @@ tce-load -wicl git compiletc coreutils
 To manually build an extension, `cd` into the directory of the extension and type:
 
 ```
-make TC_VERSION=10.0-x86_64
+make TC_VERSION=11.0-x86_64
 ````
 
-The default `TC_VERSION` is `9.0-x86_64`, if that variable is omitted.
+The default `TC_VERSION` is `11.0-x86_64`, if that variable is omitted.
 
 The files should be output to `$HOME/artifacts` in a subdirectory with the name of the extension and version of TinyCore. It will contain a simple `.info` file, the `md5 and sha256` hashes, the `.dep` files, and of course the `.tcz` extension file.
 

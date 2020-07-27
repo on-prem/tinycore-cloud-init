@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # ANSI COLORS
 CRE="$(echo -e '\r\033[K')"
 RED="$(echo -e '\033[1;31m')"

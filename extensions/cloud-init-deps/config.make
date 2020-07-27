@@ -1,6 +1,6 @@
 # Config values
 
-VERSION ?= 20.1
+VERSION ?= 20.2
 package := cloud-init-deps
 package_name := $(package)-$(VERSION).tar.gz
 package_source := https://github.com/canonical/cloud-init/archive/$(VERSION).tar.gz
